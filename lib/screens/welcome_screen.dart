@@ -1,9 +1,8 @@
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 
 import 'login_screen.dart';
 import 'registration_screen.dart';
-
-import 'package:animated_text_kit/animated_text_kit.dart';
 
 class WelcomeScreen extends StatefulWidget {
   static const String id = 'welcome_screen';
@@ -24,21 +23,16 @@ class _WelcomeScreenState extends State<WelcomeScreen>
       duration: Duration(seconds: 1),
       vsync: this,
     );
-
     this.animation = ColorTween(begin: Colors.grey, end: Colors.white)
         .animate(this.controller);
-
     this.controller.forward();
-
     this.controller.addListener(() {
       setState(() {});
-      print(this.animation.value);
     });
   }
 
   @override
   void dispose() {
-    print("[Welcome][dispose] =>");
     this.controller.dispose();
     super.dispose();
   }
