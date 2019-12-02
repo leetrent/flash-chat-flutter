@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "930726221703",
+    "firebase_url": "https://flash-chat-7390e.firebaseio.com",
+    "project_id": "flash-chat-7390e",
+    "storage_bucket": "flash-chat-7390e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:930726221703:android:a0f60e4b49229dad5be522",
+        "android_client_info": {
+          "package_name": "com.trenttek.flash_chat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "930726221703-j8pomlr390l0hnj9nj00q5t5gi3uik74.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyByQKDwpkYTbVbnS1fxGMIZNanH-Ptu8DE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "930726221703-j8pomlr390l0hnj9nj00q5t5gi3uik74.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
