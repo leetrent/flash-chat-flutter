@@ -62,6 +62,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               onPressed: () {
                 print(email);
                 print(password);
+                print('[register] => $email');
+                print('[register] => $password');
               },
             )
           ],
