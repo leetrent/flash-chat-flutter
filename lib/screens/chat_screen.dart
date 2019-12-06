@@ -89,6 +89,8 @@ class _ChatScreenState extends State<ChatScreen> {
                   for (var message in messages) {
                     final messageText = message.data['text'];
                     final messageSender = message.data['sender'];
+                    print('messageText: $messageText');
+                    print('messageSender: $messageSender');
                     final messageBubble = MessageBubble(
                       sender: messageSender,
                       text: messageText,
@@ -162,7 +164,7 @@ class MessageBubble extends StatelessWidget {
             horizontal: 20.0,
           ),
           child: Text(
-            '$this.text from $this.sender',
+            '$text from $sender',
             style: TextStyle(
               color: Colors.white,
               fontSize: 15.0,
