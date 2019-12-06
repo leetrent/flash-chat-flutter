@@ -85,18 +85,23 @@ class _ChatScreenState extends State<ChatScreen> {
                 }
                 if (snapshot.hasData) {
                   final messages = snapshot.data.documents;
-                  List<Text> messageWidgets = [];
+                  List<MessageBubble> messageBubbles = [];
                   for (var message in messages) {
                     final messageText = message.data['text'];
                     final messageSender = message.data['sender'];
-                    final messageWidget = Text(
-                        '$messageText from $messageSender',
-                        style: TextStyle(fontSize: 50.0));
-                    messageWidgets.add(messageWidget);
+                    final messageBubble = MessageBubble(
+                      sender: messageSender,
+                      text: messageText,
+                    );
+                    messageBubbles.add(messageBubble);
                   }
                   return Expanded(
                     child: ListView(
-                      children: messageWidgets,
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 10.0,
+                        vertical: 20.0,
+                      ),
+                      children: messageBubbles,
                     ),
                   );
                 }
@@ -132,6 +137,37 @@ class _ChatScreenState extends State<ChatScreen> {
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class MessageBubble extends StatelessWidget {
+  MessageBubble({@required this.sender, @required this.text});
+  final String sender;
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.all(10.0),
+      child: Material(
+        borderRadius: BorderRadius.circular(30.0),
+        elevation: 5.0,
+        color: Colors.lightBlueAccent,
+        child: Padding(
+          padding: EdgeInsets.symmetric(
+            vertical: 10.0,
+            horizontal: 20.0,
+          ),
+          child: Text(
+            '$this.text from $this.sender',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 15.0,
+            ),
+          ),
         ),
       ),
     );
