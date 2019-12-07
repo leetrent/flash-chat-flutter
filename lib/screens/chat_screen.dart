@@ -4,6 +4,7 @@ import 'package:flash_chat/constants.dart';
 import 'package:flutter/material.dart';
 
 final _firestore = Firestore.instance;
+FirebaseUser loggedInUser;
 
 class ChatScreen extends StatefulWidget {
   static const String id = 'chat_screen';
@@ -14,7 +15,7 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   final TextEditingController messageTextController = TextEditingController();
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  FirebaseUser loggedInUser;
+
   String messageText;
 
   @override
@@ -27,9 +28,9 @@ class _ChatScreenState extends State<ChatScreen> {
     try {
       final user = await _auth.currentUser();
       if (user != null) {
-        this.loggedInUser = user;
+        loggedInUser = user;
         print(
-            '[chat][getCurrentUser] => (loggedInUser): ${this.loggedInUser.email}');
+            '[chat][getCurrentUser] => (loggedInUser): ${loggedInUser.email}');
       }
     } on Exception catch (e) {
       print('[chat][getCurrentUser] => Exception encountered:');
@@ -94,7 +95,7 @@ class _ChatScreenState extends State<ChatScreen> {
                     onPressed: () {
                       _firestore.collection('messages').add({
                         'text': this.messageText,
-                        'sender': this.loggedInUser.email
+                        'sender': loggedInUser.email
                       });
                       this.messageTextController.clear();
                     },
@@ -134,9 +135,13 @@ class MessagesStream extends StatelessWidget {
             final messageSender = message.data['sender'];
             print('messageText: $messageText');
             print('messageSender: $messageSender');
+
+            final currentUser = loggedInUser.email;
+
             final messageBubble = MessageBubble(
               sender: messageSender,
               text: messageText,
+              isLoggedInUser: (currentUser == messageSender),
             );
             messageBubbles.add(messageBubble);
           }
@@ -157,9 +162,13 @@ class MessagesStream extends StatelessWidget {
 }
 
 class MessageBubble extends StatelessWidget {
-  MessageBubble({@required this.sender, @required this.text});
+  MessageBubble(
+      {@required this.sender,
+      @required this.text,
+      @required this.isLoggedInUser});
   final String sender;
   final String text;
+  final bool isLoggedInUser;
 
   @override
   Widget build(BuildContext context) {
@@ -182,7 +191,7 @@ class MessageBubble extends StatelessWidget {
               bottomRight: Radius.circular(30.0),
             ),
             elevation: 5.0,
-            color: Colors.lightBlueAccent,
+            color: (isLoggedInUser) ? Colors.lightBlueAccent : Colors.white,
             child: Padding(
               padding: EdgeInsets.symmetric(
                 vertical: 10.0,
@@ -191,7 +200,7 @@ class MessageBubble extends StatelessWidget {
               child: Text(
                 text,
                 style: TextStyle(
-                  color: Colors.white,
+                  color: (isLoggedInUser) ? Colors.white : Colors.black87,
                   fontSize: 15.0,
                 ),
               ),
